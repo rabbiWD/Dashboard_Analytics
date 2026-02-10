@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -11,22 +10,7 @@ import {
   CartesianGrid,
 } from "recharts";
 
-type OrdersPoint = { month: string; orders: number };
-
-const ordersData: OrdersPoint[] = [
-  { month: "Jan", orders: 18 },
-  { month: "Feb", orders: 24 },
-  { month: "Mar", orders: 21 },
-  { month: "Apr", orders: 30 },
-  { month: "May", orders: 35 },
-  { month: "Jun", orders: 33 },
-  { month: "Jul", orders: 41 },
-  { month: "Aug", orders: 38 },
-  { month: "Sep", orders: 45 },
-  { month: "Oct", orders: 49 },
-  { month: "Nov", orders: 54 },
-  { month: "Dec", orders: 60 },
-];
+export type OrdersPoint = { month: string; orders: number };
 
 function ChartSkeleton() {
   return (
@@ -34,25 +18,19 @@ function ChartSkeleton() {
   );
 }
 
-export default function OrdersBarChart() {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<OrdersPoint[]>([]);
-
-  //  Simulate API delay for “Animated loading”
-  useEffect(() => {
-    const t = setTimeout(() => {
-      setData(ordersData);
-      setLoading(false);
-    }, 900);
-    return () => clearTimeout(t);
-  }, []);
-
+export default function OrdersBarChart({
+  data,
+  loading,
+}: {
+  data: OrdersPoint[];
+  loading: boolean;
+}) {
   return (
-    <div className="rounded-2xl border bg-white p-4">
-      <h3 className="text-base font-semibold text-gray-900">
+    <div className="rounded-2xl border bg-white dark:bg-gray-900 dark:border-gray-700 p-4 transition-colors">
+      <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">
         Orders Per Month
       </h3>
-      <p className="text-sm text-gray-500 mb-3">Jan – Dec</p>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">Jan – Dec</p>
 
       {loading ? (
         <ChartSkeleton />
@@ -64,7 +42,6 @@ export default function OrdersBarChart() {
               <XAxis dataKey="month" />
               <YAxis />
               <Tooltip />
-              {/*  Recharts bar animation happens on mount */}
               <Bar dataKey="orders" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
