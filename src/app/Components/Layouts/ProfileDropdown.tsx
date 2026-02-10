@@ -7,7 +7,7 @@ export default function ProfileDropdown() {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // ✅ Close on outside click
+  //  Close on outside click
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -22,7 +22,7 @@ export default function ProfileDropdown() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ✅ Close on ESC key
+  // Close on ESC key
   useEffect(() => {
     function handleEsc(e: KeyboardEvent) {
       if (e.key === "Escape") {

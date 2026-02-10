@@ -12,7 +12,7 @@ export default function DashboardLayout({
   const [collapsed, setCollapsed] = useState(false); // desktop collapse
   const [mobileOpen, setMobileOpen] = useState(false); // mobile drawer
 
-  // ✅ auto collapse on tablet & mobile
+  //  auto collapse on tablet & mobile
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 1024) {
