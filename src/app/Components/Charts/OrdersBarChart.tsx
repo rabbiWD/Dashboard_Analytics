@@ -14,7 +14,7 @@ export type OrdersPoint = { month: string; orders: number };
 
 function ChartSkeleton() {
   return (
-    <div className="h-[280px] animate-pulse rounded-xl bg-gray-200 dark:bg-gray-700" />
+    <div className="h-[280px] animate-pulse rounded-xl bg-gray-200 " />
   );
 }
 
@@ -26,7 +26,7 @@ export default function OrdersBarChart({
   loading: boolean;
 }) {
   return (
-    <div className="rounded-2xl border bg-white dark:bg-gray-900 dark:border-gray-700 p-4 transition-colors">
+    <div className="rounded-2xl border bg-white p-4 transition-colors">
       <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">
         Orders Per Month
       </h3>

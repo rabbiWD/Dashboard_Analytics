@@ -41,11 +41,11 @@ export default function Filters() {
   );
 
   return (
-    <div className="rounded-2xl border bg-white p-4 shadow-sm dark:bg-gray-900 dark:border-gray-700 transition-colors">
+    <div className="rounded-2xl border bg-white p-4 shadow-sm transition-colors">
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         {/* Left: Range buttons */}
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-sm font-medium text-gray-700 dark:text-gray-200 mr-1">
+          <span className="text-sm font-medium text-gray-700  mr-1">
             Date range:
           </span>
 
@@ -61,11 +61,11 @@ export default function Filters() {
                 className={[
                   "px-3 py-2 rounded-md border text-sm font-medium",
                   "transition active:scale-[0.98]",
-                  "focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600",
+                  "focus:outline-none focus:ring-2 focus:ring-gray-300",
                   "disabled:opacity-60 disabled:cursor-not-allowed",
                   active
-                    ? "bg-gray-900 text-white border-gray-900 hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:border-white"
-                    : "bg-white text-gray-900 hover:bg-gray-50 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700 dark:hover:bg-gray-800",
+                    ? "bg-gray-900 text-white border-gray-900 hover:bg-gray-800 "
+                    : "bg-white text-gray-900 hover:bg-gray-50 ",
                 ].join(" ")}
                 aria-pressed={active}
               >
@@ -76,7 +76,7 @@ export default function Filters() {
 
           {/* Loading badge */}
           {loading && (
-            <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">
+            <span className="ml-2 text-xs text-gray-500 ">
               Updating…
             </span>
           )}
@@ -86,7 +86,7 @@ export default function Filters() {
         <div className="flex items-center gap-2">
           <label
             htmlFor="userType"
-            className="text-sm font-medium text-gray-700 dark:text-gray-200"
+            className="text-sm font-medium text-black"
           >
             User type:
           </label>
@@ -101,7 +101,7 @@ export default function Filters() {
               "transition hover:bg-gray-50",
               "focus:outline-none focus:ring-2 focus:ring-gray-300",
               "disabled:opacity-60 disabled:cursor-not-allowed",
-              "dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700 dark:hover:bg-gray-800 dark:focus:ring-gray-600",
+              "",
             ].join(" ")}
           >
             <option value="all">All</option>
