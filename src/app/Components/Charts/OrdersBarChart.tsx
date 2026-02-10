@@ -30,7 +30,7 @@ const ordersData: OrdersPoint[] = [
 
 function ChartSkeleton() {
   return (
-    <div className="h-[280px] animate-pulse rounded-xl bg-gray-100" />
+    <div className="h-[280px] animate-pulse rounded-xl bg-gray-200 dark:bg-gray-700" />
   );
 }
 

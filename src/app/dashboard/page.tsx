@@ -12,7 +12,13 @@ import { loadDashboard } from "../../store/slices/dashboardSlice";
 
 // ---------- Simple skeleton (fallback) ----------
 function BlockSkeleton({ className = "" }: { className?: string }) {
-  return <div className={`animate-pulse rounded-2xl bg-gray-100 ${className}`} />;
+  return (
+    <div
+      className={`animate-pulse rounded-2xl border bg-white dark:bg-gray-800 dark:border-gray-700 ${
+        className
+      }`}
+    />
+  );
 }
 
 // ---------- Lazy-loaded Charts (performance) ----------

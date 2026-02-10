@@ -1,6 +1,6 @@
 # Analytics Dashboard
 
-A modern, responsive analytics dashboard built with Next.js, TypeScript, Tailwind CSS, and Redux Toolkit. It includes charting components, layout primitives, and a theme toggle (light/dark) with persistence.
+A modern, responsive analytics dashboard built with Next.js, TypeScript, Tailwind CSS, and Redux Toolkit. It includes charting components, layout primitives with persistence.
 
 ## Highlights
 - Next.js (App Router) + TypeScript
