@@ -1,57 +1,97 @@
 "use client";
 
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-
+import { useAppDispatch, useAppAppSelector, useAppSelector } from "../../store/hooks";
 import { loadDashboard, setRange, setUserType } from "../../store/slices/dashboardSlice";
+
 type Range = "7d" | "30d" | "12m";
 type UserType = "all" | "free" | "premium" | "enterprise";
+
 export default function Filters() {
   const dispatch = useAppDispatch();
   const { filters, loading } = useAppSelector((s) => s.dashboard);
 
-  const changeRange = (range: "7d" | "30d" | "12m") => {
+  const changeRange = (range: Range) => {
     dispatch(setRange(range));
     dispatch(loadDashboard({ ...filters, range }));
   };
 
-  const changeUserType = (userType: "all" | "free" | "premium" | "enterprise") => {
+  const changeUserType = (userType: UserType) => {
     dispatch(setUserType(userType));
     dispatch(loadDashboard({ ...filters, userType }));
   };
 
-  return (
-    <div className="rounded-2xl border bg-white p-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-      <div className="flex flex-wrap gap-2">
-        {[
-          { key: "7d", label: "Last 7 days" },
-          { key: "30d", label: "Last 30 days" },
-          { key: "12m", label: "Last 12 months" },
-        ].map((b) => (
-          <button
-            key={b.key}
-            disabled={loading}
-            onClick={() => changeRange(b.key as Range)}
-            className={`px-3 py-2 rounded-md border text-sm hover:bg-gray-50 disabled:opacity-60
-              ${filters.range === b.key ? "bg-gray-900 text-white border-gray-900" : "text-black"}`}
-          >
-            {b.label}
-          </button>
-        ))}
-      </div>
+  const ranges: { key: Range; label: string }[] = [
+    { key: "7d", label: "Last 7 days" },
+    { key: "30d", label: "Last 30 days" },
+    { key: "12m", label: "Last 12 months" },
+  ];
 
-      <div className="flex items-center gap-2">
-        <span className="text-sm text-gray-600">User type:</span>
-        <select
-          disabled={loading}
-          value={filters.userType}
-          onChange={(e) => changeUserType(e.target.value as UserType)}
-          className="rounded-md border px-3 py-2 text-sm bg-white"
-        >
-          <option value="all">All</option>
-          <option value="free">Free</option>
-          <option value="premium">Premium</option>
-          <option value="enterprise">Enterprise</option>
-        </select>
+  return (
+    <div className="rounded-2xl border bg-white p-4 shadow-sm">
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        {/* Left: Range buttons */}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-sm font-medium text-gray-700 mr-1">
+            Date range:
+          </span>
+
+          {ranges.map((b) => {
+            const active = filters.range === b.key;
+
+            return (
+              <button
+                key={b.key}
+                type="button"
+                disabled={loading}
+                onClick={() => changeRange(b.key)}
+                className={[
+                  "px-3 py-2 rounded-md border text-sm font-medium",
+                  "transition active:scale-[0.98]",
+                  "focus:outline-none focus:ring-2 focus:ring-gray-300",
+                  "disabled:opacity-60 disabled:cursor-not-allowed",
+                  active
+                    ? "bg-gray-900 text-white border-gray-900 hover:bg-gray-800"
+                    : "bg-white text-gray-900 hover:bg-gray-50",
+                ].join(" ")}
+                aria-pressed={active}
+              >
+                {b.label}
+              </button>
+            );
+          })}
+
+          {/* Loading badge */}
+          {loading && (
+            <span className="ml-2 text-xs text-gray-500">
+              Updating…
+            </span>
+          )}
+        </div>
+
+        {/* Right: User type dropdown */}
+        <div className="flex items-center gap-2">
+          <label htmlFor="userType" className="text-sm font-medium text-gray-700">
+            User type:
+          </label>
+
+          <select
+            id="userType"
+            disabled={loading}
+            value={filters.userType}
+            onChange={(e) => changeUserType(e.target.value as UserType)}
+            className={[
+              "rounded-md border px-3 py-2 text-sm bg-white text-gray-900",
+              "transition hover:bg-gray-50",
+              "focus:outline-none focus:ring-2 focus:ring-gray-300",
+              "disabled:opacity-60 disabled:cursor-not-allowed",
+            ].join(" ")}
+          >
+            <option value="all">All</option>
+            <option value="free">Free</option>
+            <option value="premium">Premium</option>
+            <option value="enterprise">Enterprise</option>
+          </select>
+        </div>
       </div>
     </div>
   );

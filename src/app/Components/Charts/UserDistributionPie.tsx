@@ -1,41 +1,53 @@
 "use client";
 
-import {
-  PieChart,
-  Pie,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-  Cell,
-} from "recharts";
+import { PieChart, Pie, Tooltip, ResponsiveContainer, Legend, Cell } from "recharts";
+import Card from "../UI/Card";
+import Skeleton from "../UI/Skeleton";
+import EmptyState from "../UI/EmptyState";
 
-type Slice = { name: string; value: number };
-
-const data: Slice[] = [
-  { name: "Free", value: 720 },
-  { name: "Premium", value: 420 },
-  { name: "Enterprise", value: 105 },
-];
-
-// Recharts Pie এ colors না দিলেও default-এ ঠিক চলে,
-// কিন্তু slice আলাদা বোঝাতে সাধারণত Cell লাগে।
-// যদি একদম no-color চাই, Cell বাদ দিতে পারো।
 const COLORS = ["#60a5fa", "#34d399", "#fbbf24"];
 
-export default function UserDistributionPie() {
-  return (
-    <div className="rounded-2xl border bg-white p-4">
-      <h3 className="text-base font-semibold text-gray-900">
-        User Distribution
-      </h3>
-      <p className="text-sm text-gray-500 mb-3">Free vs Premium vs Enterprise</p>
+export default function UserDistributionPie({
+  users,
+  loading,
+}: {
+  users: { free: number; premium: number; enterprise: number } | null;
+  loading?: boolean;
+}) {
+  if (loading) {
+    return (
+      <Card title="User Distribution" subtitle="Free vs Premium vs Enterprise">
+        <Skeleton className="h-[300px]" />
+      </Card>
+    );
+  }
 
+  const data = users
+    ? [
+        { name: "Free", value: users.free },
+        { name: "Premium", value: users.premium },
+        { name: "Enterprise", value: users.enterprise },
+      ]
+    : [];
+
+  const total = data.reduce((a, b) => a + b.value, 0);
+
+  if (!users || total === 0) {
+    return (
+      <Card title="User Distribution" subtitle="Free vs Premium vs Enterprise">
+        <EmptyState title="No user distribution data" subtitle="Select a different user type." />
+      </Card>
+    );
+  }
+
+  return (
+    <Card title="User Distribution" subtitle="Free vs Premium vs Enterprise">
       <div className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie data={data} dataKey="value" nameKey="name" outerRadius={90}>
-              {data.map((_, index) => (
-                <Cell key={index} fill={COLORS[index % COLORS.length]} />
+              {data.map((_, i) => (
+                <Cell key={i} fill={COLORS[i % COLORS.length]} />
               ))}
             </Pie>
             <Tooltip />
@@ -43,6 +55,6 @@ export default function UserDistributionPie() {
           </PieChart>
         </ResponsiveContainer>
       </div>
-    </div>
+    </Card>
   );
 }
